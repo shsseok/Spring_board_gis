@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="geomex.notice.mapper.UserMapper">
+	<select id="findByUserId" resultType="geomex.notice.model.UserVo">
+    SELECT * FROM notice.user WHERE user_id = #{userId}
+</select> 
+    <insert id="insertUser" parameterType="geomex.notice.model.UserVo">
+    	INSERT INTO notice.user (user_id, user_password, user_name)
+    	VALUES (#{userId}, #{userPassword}, #{userName})
+	</insert>
+</mapper>

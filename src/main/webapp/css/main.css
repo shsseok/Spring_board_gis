@@ -1,0 +1,138 @@
+@CHARSET "UTF-8";
+
+/* Default Style */
+@font-face { font-family: 'Nanum'; src: url('./font/NanumGothic.woff') format('woff'); font-weight: normal; font-style: normal; }
+html, body { width: 100%; height: 100%; padding: 0px; margin: 0px; overflow: hidden;}
+* { font-family: 'NanumGothic', '맑은고딕', 'Malgun Gothic'; font-size: 14px;}
+button, input[type="button"] {border: none; outline: 0; cursor: pointer; transition: 0.3s; background-repeat: no-repeat; background-position: center;}
+div, span, iframe, h1, h2, h3, h4, h5, h6, p, a, img, ol, ul, li, header, nav, section, footer { margin: 0; padding: 0; border: 0;}
+
+/* 지도 위 버튼 */
+.ol-control.mainBar > .ol-bar {background-color: #fff; border: 1px solid #ccc; border-radius: 2px; padding: 0; box-shadow: 0px 0px 5px -3px rgba(0,0,0,0.6);}
+.ol-control.mainBar:hover {background-color: #fff;}
+#map .mainControl {position: relative; border-radius: 0;}
+#map .mainControl > button {position: relative; background-color: #fff; font-size: 14px; color: #333; font-weight: 100; width: 50px; height: 35px; padding: 0; border-radius: 0; border: 1px solid transparent; transition: 0.3s; cursor: pointer; display: flex; justify-content: center; align-items: center;}
+#map .mainControl > button:hover:after {content: attr(title); display: block; width: 50px; height: 30px; line-height: 30px; color: #fff; font-size: 12px; border-radius: 3px; background-color: rgba(0,0,0,0.4); position: absolute; left: 0; bottom: -40px;}
+#map .mainControl > button:hover:before {content: ""; display: block; border: 5px solid transparent; border-bottom: 5px solid rgba(0,0,0,0.4); position: absolute; left: 50%; bottom: -10px; transform: translateX(-50%);}
+#map .mainControl > button > span {display: inline-block; width: 16px; height: 16px; line-height: 16px; font-size: 15px; border-radius: 2px;}
+#map .mainControl > button:hover, #map .mainControl > button.active {background-color: #ddd;}
+#map .mainControl > button > span.area {background-image: url(../img/icon_area.png);}
+#map .mainControl > button > span.clear {background-image: url(../img/icon_clear.png);}
+#map .mainControl > button > span.home {background-image: url(../img/icon_home.png);}
+#map .mainControl > button > span.length {background-image: url(../img/icon_length.png);}
+#map .mainControl > button > span.move {background-image: url(../img/icon_move.png);}
+#map .mainControl > button > span.export {background-image: url(../img/icon_save.png);}
+#map .mainControl > button > span.sketch {background-image: url(../img/icon_sketch.png);}
+
+/* OpenLayers Custom CSS */
+.mainControl > button { width: 3.375em; }
+.ol-notification > div { z-index: 9; }
+
+/* ol css 수정 */
+.layerName, .layerThemeValue {font-size: 12px;}
+/* #map .ol-control {background-color: initial;} */
+/* #map .ol-control:hover {background-color: initial;} */
+#map .ol-control > button {background-color: #fff; color: #333; margin: 0; padding: 2px 5px;}
+.ol-control-right.ol-overview.ol-collapsed button:before, .ol-control.ol-bookmark > button::before {display: none;}
+#map .ol-control.bottom_btn > button:hover {background-color: #007fff; color: #fff;}
+#map .ol-control.ol-active.bottom_btn > button {background-color: #007fff; color: #fff;}
+#map .ol-zoom, #map .ol-bookmark {left: initial !important; right: 8px; background-color: initial; box-shadow: 0px 0px 5px 2px rgba(0,0,0,.3);}
+#map .ol-searchgps  {left: initial !important; right: 8px; background-color: initial;}
+#map .ol-zoom > button, .ol-bookmark > button, .ol-searchgps > button {width: 30px; height: 30px;}
+#map .ol-zoom button:hover, .ol-bookmark button:hover, .ol-searchgps button:hover {background-color: #007fff; color: #fff;}
+#map .ol-zoom:hover {background-color: initial;}
+#map .ol-overview button {width: 35px; height: 35px; background-image:url(../img/icon_map.png); box-shadow: 0px 0px 5px 2px rgba(0,0,0,.3);}
+#map .ol-overview button:hover {background-image:url(../img/icon_map_over.png); background-color: #007fff;}
+#map .ol-bookmark {top: 75px !important;}
+#map .ol-bookmark > div {position: absolute; top: 0; left: -255px; z-index: 9; width: 245px; background-color: #fff; box-sizing: border-box; padding: 10px; border-radius: 2px;}
+#map .ol-bookmark > div input {width: 100%; border: 1px solid #ddd; padding: 5px 0px; font-size: 12px;}
+#map .ol-bookmark > button {background-image:url(../img/icon_star.png);}
+#map .ol-bookmark >  button:hover {background-image:url(../img/icon_star_over.png); background-color: #007fff;}
+#map .ol-bookmark ul {margin-bottom: 5px;}
+#map .ol-bookmark ul li {padding: 5px; height: 30px; line-height: 30px;}
+#map .ol-control.ol-bookmark li:hover {background-color: #fff; color: #0077ff;}
+#map .ol-control.ol-bookmark > div button {color: #333;}
+#map .ol-control.ol-bookmark > div button:hover {color: #fff; background-color: #0077ff;}
+#map .ol-control.ol-bookmark > div button:before {display: none;}
+#map .ol-searchgps.ol-search {top: 110px !important; display: flex; flex-direction: column;}
+#map .ol-searchgps.ol-search ul li {padding: 0.5em 0.5em;}
+#map .ol-searchgps.ol-search > div, .ol-searchgps.ol-search > label {background-color: #fff; margin: 0 !important; padding: 10px;}
+#map .ol-searchgps.ol-search > label {text-align: right; border-top-left-radius: 2px; border-top-right-radius: 2px; border-bottom: 1px solid #ccc; background-color: #fafafa;}
+#map .ol-searchgps.ol-search .ol-longitude label, .ol-searchgps.ol-search .ol-latitude label  {width: auto !important; margin: 0 5px 0 0 !important; transform: none !important;}
+#map .ol-searchgps.ol-search .ol-latitude {border-bottom-left-radius: 2px; border-bottom-right-radius: 2px;}
+#map .ol-searchgps.ol-search input {border: 1px solid #ddd;}
+#map .ol-searchgps.ol-search button {background-image:url(../img/icon_tude.png);  margin-bottom: 10px; box-shadow: 0px 0px 5px 2px rgba(0,0,0,.3);}
+#map .ol-control.ol-searchgps > button:first-child {background-image:url(../img/icon_tude.png); margin-left: auto;}
+#map .ol-searchgps.ol-search  button:hover {background-image:url(../img/icon_tude_over.png); background-color: #007fff;}
+#map .ol-control.ol-searchgps > button:first-child:before {display: none;}
+#map .ol-control-right.ol-overview button:before {display: none;}
+#map .ol-control.ol-overview .panel {margin: 38px;}
+
+#map .ol-control.ol-bar .ol-toggle.ol-active > button {background-color: #007fff;}
+#map .ol-control.ol-toggle button:disabled {background-color: #ccc; color: #666;}
+
+#map {
+	position: fixed;
+	width: 100%;
+	height: 100%;
+}
+#map_legend {
+	z-index: 1;
+    width: 170px;
+    height: 270px;
+    position: fixed;
+    top: 50px;
+    left: 5px;
+    background-color: white;
+    border : 1px solid;
+    opacity : 0.7;
+    bor
+}
+#map_setPos {
+	z-index: 1;
+    width: 230px;
+    height: 80px;
+    position: fixed;
+    top: 330px;
+    left: 5px;
+    background-color: white;
+    border : 1px solid;
+    opacity : 0.7;
+}
+.map_controlBar {
+	z-index: 1;
+    width: 250px;
+    height: 30px;
+    position: fixed;
+    top: 0px;
+    left: 50%;
+    background-color: white;
+    border : 1px solid;
+    opacity : 0.7;
+}
+.mapPos{
+	margin-top: 5px;
+}
+.ol-overlaycontainer .ol-selectable{
+}
+.ol-overlaycontainer .ol-overlay-container .popover{
+	top: 0px !important;
+	left: 0px !important;
+	width: 120px;
+    text-align: center;
+    background-color: #303035;
+    padding: 3px;
+}
+.ol-overlay-container .popover .popover-title{
+	margin: 0;
+}
+.ol-overlay-container .popover .popover-content{
+    margin: 0;
+    text-align: center;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    font-family: 'Nanum' !important;
+    font-size: 15px;
+    color: #ffffff;
+}

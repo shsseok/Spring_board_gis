@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="geomex.notice.mapper.LayerMapper">
+<select id="selectLayerStyle" resultType="geomex.notice.model.LayerStyleVo">
+        SELECT ls.stroke_color, ls.stroke_width, 
+               ls.fill_color, ls.text_font, ls.text_color, 
+               ls.text_stroke_color, ls.text_stroke_width
+        FROM map.layers l
+        JOIN map.layer_styles ls ON l.id = ls.layer_id
+        WHERE l.layer_name = #{layerName} AND l.request_type = #{requestType}
+</select>	
+</mapper>

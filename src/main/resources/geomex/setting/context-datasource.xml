@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:jdbc="http://www.springframework.org/schema/jdbc"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
+        http://www.springframework.org/schema/jdbc  http://www.springframework.org/schema/jdbc/spring-jdbc-4.0.xsd">
+	 <!--스프링에서 지원하는 프로퍼티 설정  -->
+     <bean id="properties" class="org.springframework.context.support.PropertySourcesPlaceholderConfigurer">
+    	<property name="locations">
+        <list>
+            <value>classpath:/geomex/settingproperties/postgresql.properties</value>
+            <value>classpath:/geomex/settingproperties/filepath.properties</value>
+        </list>
+    	</property>
+    	<property name="fileEncoding" value="UTF-8" />
+	</bean>
+     	
+		<!-- JDBC-PostgreSQL -->
+	<bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+		<property name="driverClassName" value="${jdbc.driverClassName}" />
+		<property name="url" value="${jdbc.url}" />
+		<property name="username" value="${jdbc.username}" />
+		<property name="password" value="${jdbc.password}" />
+	</bean>
+	
+	
+</beans>

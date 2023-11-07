@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="geomex.notice.mapper.CCTVMapper">
+    <select id="selectCCTVInEmd" resultType="geomex.notice.model.CctvVo" parameterType="string">
+     SELECT COUNT(*) AS cctv_count
+	 FROM xeux.asset_cctv
+	 WHERE ST_Contains(ST_GeomFromText(#{geometry}, cctv.geom)
+    </select>
+    
+    <!-- <select id="selectCCTVCountInBuffer" resultType="int" parameterType="geomex.notice.model.CoordinateVo">
+    SELECT COUNT(*) 
+    FROM xeus.asset_cctv AS cctv
+    WHERE ST_Contains(ST_Buffer(ST_GeomFromText(#{coordinate}, 5186), 1000), cctv._geometry)
+	</select> -->
+	
+	
+	<select id="selectCctvInEmd" parameterType="geomex.notice.model.GeometryVo" resultType="geomex.notice.model.CctvVo">
+    SELECT *
+    FROM xeus.asset_cctv AS CCTV
+    WHERE ST_Within(CCTV._geometry, ST_GeomFromText(#{geometry}, 5186)) <!-- WKT로 넘어온 형식을 다시 Geometry형식으로 바꿔준다. -->
+  </select>
+
+</mapper>

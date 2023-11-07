@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="geomex.notice.mapper.ReviewMapper">
+<select id="selectReviewList" resultType="geomex.notice.model.ReviewVo" parameterType="int">
+    SELECT 
+      *
+    FROM notice.review
+    WHERE board_id = #{boardId}
+</select>
+<select id="selectReviewById" resultType="geomex.notice.model.ReviewVo" parameterType="int">
+    SELECT 
+       *
+    FROM notice.review
+    WHERE review_id = #{reviewId}
+</select>
+<insert id="insertReview" parameterType="geomex.notice.model.ReviewVo">
+    INSERT INTO notice.review (board_id, review_title, review_content, review_date, writer_id)
+    VALUES (#{boardId}, #{reviewTitle}, #{reviewContent}, CURRENT_TIMESTAMP, #{writerId})
+</insert>
+<update id="updateReview" parameterType="geomex.notice.model.ReviewVo">
+        UPDATE notice.review
+        SET review_title = #{reviewTitle},
+            review_content = #{reviewContent},
+            review_date = CURRENT_TIMESTAMP,
+            writer_id = #{writerId}
+        WHERE review_id = #{reviewId}
+ </update>
+<delete id="deleteReview" parameterType="int">
+    DELETE FROM notice.review WHERE review_id = #{reviewId}
+</delete>
+</mapper>

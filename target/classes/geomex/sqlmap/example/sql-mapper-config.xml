@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN" "http://mybatis.org/dtd/mybatis-3-config.dtd">
+
+<configuration>
+	<settings>
+ 		<!-- 언더바 처리 sql매핑할때 카멜케이스도 허용할려면 이부분이 필요함 따로 추가 -->
+        <setting name="mapUnderscoreToCamelCase" value="true"/>       
+        <setting name="callSettersOnNulls" value="true"/>
+    </settings>
+</configuration>

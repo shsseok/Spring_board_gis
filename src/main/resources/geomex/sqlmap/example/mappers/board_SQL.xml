@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="geomex.notice.mapper.BoardMapper">
+	
+	<select id="selectBoardlist" resultType="geomex.notice.model.BoardVo">
+    		select b.*,u.user_name from notice.user u, notice.board b where u.user_id=b.user_id order by b.board_id limit #{limit} offset #{offset};
+	</select>
+	<!-- 페이징 처리를 위해 전체 게시물 목록수를 반환한다. -->
+	<select id="selectBoardCount" resultType="int">
+    		SELECT COUNT(*) FROM notice.board
+	</select>
+<select id="searchBoardlist" resultType="geomex.notice.model.BoardVo">
+    SELECT b.*,u.user_name
+    FROM notice.user u 
+    inner join notice.board b on u.user_id = b.user_id
+    <where>   
+      
+        <if test="type == 'title'">
+            b.board_title LIKE CONCAT('%', #{text}, '%')
+        </if>       
+        <if test="type == 'content'">
+            b.board_content LIKE CONCAT('%', #{text}, '%')
+        </if>       
+        <if test="type == 'author'">
+            u.user_name LIKE CONCAT('%', #{text}, '%')
+        </if>
+    </where>
+    ORDER BY b.board_id asc
+    LIMIT #{limit} OFFSET #{offset}
+    
+</select>
+<select id="selectSearchCount" resultType="int">
+    SELECT count(*)
+    FROM notice.user u 
+    inner join notice.board b on u.user_id = b.user_id
+    <where>   
+        <if test="type == 'title'">
+           b.board_title LIKE CONCAT('%', #{text}, '%')
+        </if>       
+        <if test="type == 'content'">
+           b.board_content LIKE CONCAT('%', #{text}, '%')
+        </if>       
+        <if test="type == 'author'">
+           u.user_name LIKE CONCAT('%', #{text}, '%')
+        </if>
+    </where>
+</select>
+	<!-- 게시물 추가하고 생성된 board_id 반환 -->
+	<insert id="insertBoard" parameterType="geomex.notice.model.BoardVo" useGeneratedKeys="true" keyProperty="boardId">
+  	 	 INSERT INTO notice.board (board_title, board_content, board_date, user_id)
+  	 	 VALUES (#{boardTitle}, #{boardContent}, CURRENT_TIMESTAMP, #{userId}) 
+	</insert>
+
+	<select id="selectBoardById" resultType="geomex.notice.model.BoardVo" parameterType="int">
+   		 SELECT b.*,u.user_name FROM notice.user u, notice.board b  WHERE u.user_id=b.user_id and b.board_id = #{boardId}
+	</select>
+	
+	<insert id="insertFile" parameterType="geomex.notice.model.FileVo">
+    	INSERT INTO notice.board_file (board_id, file_name, stored_file_name, file_size, upload_date, file_path)
+    	VALUES (#{boardId}, #{fileName}, #{storedFileName}, #{fileSize},  CURRENT_TIMESTAMP, #{filePath})
+	</insert>
+
+	<update id="updateBoard" parameterType="geomex.notice.model.BoardVo">
+        UPDATE notice.board 
+        SET
+            board_title = #{boardTitle},
+            board_content = #{boardContent},
+            board_date = CURRENT_TIMESTAMP
+        WHERE
+            board_id = #{boardId} AND user_id = #{userId}
+    </update>
+    <update id="updateViewsCount" parameterType="int">
+        UPDATE notice.board 
+        SET
+            views_count=views_count+1
+        WHERE
+            board_id = #{boardId}
+    </update>
+    
+    <delete id="deleteBoard">
+    DELETE FROM notice.board 
+    WHERE 
+        board_id = #{boardId}
+	</delete>
+</mapper>
