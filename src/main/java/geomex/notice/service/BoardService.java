@@ -94,7 +94,7 @@ public class BoardService {
 	                    boardMapper.insertFile(fileVo);
 	                }
 	                // 테스트 롤백 시나리오
-	                if (boardId == 69) {
+	                if (boardId == 70) {
 	                    throw new RuntimeException("트랜잭션 롤백 테스트를 위해서");
 	                }
 	            }
