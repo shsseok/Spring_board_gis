@@ -31,7 +31,9 @@
     </bean> 
     
     <!-- 권한 세션 체크를 위한 인터셉터 인터셉터 클래스를 빈으로 등록-->
-    <bean id="sessionInterceptor" class="geomex.notice.interceptor.SessionInterceptor"/>
+    <bean id="sessionInterceptor" class="geomex.notice.interceptor.SessionInterceptor">
+
+</bean>
     
 
     

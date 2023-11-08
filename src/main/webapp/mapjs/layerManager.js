@@ -43,6 +43,7 @@ var LayerManager = {// 레이어의 요청 requestType에 따라 Vector를 생�
                 } 
             	else {                    
                     	return new ol.style.Style({
+                    		
                         stroke: new ol.style.Stroke({
                             color: layerStyle.strokeColor,
                             width: layerStyle.strokeWidth

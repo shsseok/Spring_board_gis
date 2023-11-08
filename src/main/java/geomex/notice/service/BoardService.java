@@ -7,8 +7,11 @@ import java.util.UUID;
 import java.io.IOException;
 import javax.annotation.Resource;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.TransactionStatus;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.transaction.support.DefaultTransactionDefinition;
 import org.springframework.web.multipart.MultipartFile;
 import egovframework.rte.fdl.property.EgovPropertyService;
 import geomex.notice.mapper.BoardMapper;
@@ -24,6 +27,8 @@ public class BoardService {
 	private EgovPropertyService propertiesService;
 	@Autowired
 	private UserService userService;
+	@Resource(name = "transactionManager")
+	private DataSourceTransactionManager tranScationMn;
 	
 	public ArrayList<BoardVo> getBoardlist(int offset, int limit) {
 		return boardMapper.selectBoardlist(offset, limit);
@@ -67,46 +72,58 @@ public class BoardService {
 		}
 		
 	}
-	@Transactional(rollbackFor = RuntimeException.class)
-	public boolean insertBoardAndFiles(BoardVo boardVo, List<MultipartFile> files) throws Exception {
-	    boolean isCompleted = false;
-	    File storeFile = null;
-	    try {   
-	        boardMapper.insertBoard(boardVo);            
-	        int boardId = boardVo.getBoardId();
-	        if (files != null && !files.isEmpty()) {
-	            for (MultipartFile file : files) {                    
-	                if (!file.isEmpty()) {
-	                    FileVo fileVo = new FileVo();
-	                    String fileName = file.getOriginalFilename();                        
-	                    String storedFileName = UUID.randomUUID().toString() + "_" + fileName;
+	
+	public boolean insertBoardAndFiles(BoardVo boardVo, List<MultipartFile> files) {
+		TransactionStatus tsStatus = tranScationMn.getTransaction(new DefaultTransactionDefinition());
+		File storeFile = null;
+		try {	
+			boardMapper.insertBoard(boardVo);			
+			int boardId = boardVo.getBoardId();// 반환받은 게시판 id 이 게시판에 파일을 넣어야하기 때문에
+			
+			if (files != null && !files.isEmpty()) {
+				for (MultipartFile file : files) {					
+					if (!file.isEmpty()) {
+						FileVo fileVo = new FileVo();
+						String fileName = file.getOriginalFilename();
+						System.out.println(fileName);
+						String storedFileName = UUID.randomUUID().toString() + "_" + fileName;
 
-	                    storeFile = new File(
-	                           propertiesService.getString("filePath") + File.separator + storedFileName);
-	                    
-	                    file.transferTo(storeFile);                              
-	                    fileVo.setBoardId(boardId);
-	                    fileVo.setFileName(fileName);
-	                    fileVo.setStoredFileName(storedFileName);
-	                    fileVo.setFileSize((int) file.getSize());
-	                    fileVo.setFilePath(propertiesService.getString("filePath"));
+						storeFile = new File(
+								propertiesService.getString("filePath") + File.separator + storedFileName);
+						file.transferTo(storeFile);
+						fileVo.setBoardId(boardId);
+						fileVo.setFileName(fileName);
+						fileVo.setStoredFileName(storedFileName);
+						fileVo.setFileSize((int) file.getSize());
+						fileVo.setFilePath(propertiesService.getString("filePath"));
 
-	                    boardMapper.insertFile(fileVo);
-	                }
-	                // 테스트 롤백 시나리오
-	                if (boardId == 70) {
-	                    throw new RuntimeException("트랜잭션 롤백 테스트를 위해서");
-	                }
-	            }
-	        }
-	        isCompleted = true;
-	    } catch (Exception e) {
-	        if (storeFile != null && storeFile.exists()) {
+						boardMapper.insertFile(fileVo);
+					}
+				}
+				
+			}
+			if(boardId==73)
+			{
+				throw new RuntimeException("롤백해줘");				
+			}
+			tranScationMn.commit(tsStatus);
+			return true;
+		} catch (RuntimeException e) {
+			if (storeFile != null && storeFile.exists()) {
 	            storeFile.delete();
 	        }
-	        throw e; // 예외를 다시 던져서 스프링이 처리하게 함
-	    }
-	    return isCompleted;
+			tranScationMn.rollback(tsStatus);
+			System.out.println("롤백됨");
+			e.printStackTrace();
+			return false;
+		}
+		catch(IOException i)
+		{
+			tranScationMn.rollback(tsStatus);
+			System.out.println("롤백됨");
+			i.printStackTrace();
+			return false;
+		}
 	}
 
 	public boolean userCheck(BoardVo boardVo)
