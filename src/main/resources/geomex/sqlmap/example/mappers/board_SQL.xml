@@ -55,6 +55,14 @@
    		 SELECT b.*,u.user_name FROM notice.user u, notice.board b  WHERE u.user_id=b.user_id and b.board_id = #{boardId}
 	</select>
 	
+	<select id="selectWriter" resultType="String" parameterType="int">
+    SELECT 
+    	b.user_id 
+    FROM 
+    	notice.board b 
+    WHERE b.board_id = #{boardId}
+	</select>
+	
 	<insert id="insertFile" parameterType="geomex.notice.model.FileVo">
     	INSERT INTO notice.board_file (board_id, file_name, stored_file_name, file_size, upload_date, file_path)
     	VALUES (#{boardId}, #{fileName}, #{storedFileName}, #{fileSize},  CURRENT_TIMESTAMP, #{filePath})

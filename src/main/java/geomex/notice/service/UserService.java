@@ -13,13 +13,12 @@ public class UserService {
 	@Autowired
 	private UserMapper userMapper;
 	 
-	public int login(UserVo loginData, HttpSession session) {
+	public int login(UserVo loginData) {
         String userId=loginData.getUserId();
         String userPassword=loginData.getUserPassword();
 		UserVo user = getUser(userId);
         //System.out.println("user:"+user); --> 이부분에서 null값이 계속 나와서 알고보니 카멜케이스 문제
         if (user != null && userPassword.equals(user.getUserPassword())) {
-            session.setAttribute("userId", userId);
             return 1; // 로그인 성공
         } else {
             return 0; // 로그인 실패
@@ -61,10 +60,4 @@ public class UserService {
 	            return false;
 	        }
 	    }
-	 
-	 public void logout(HttpSession session) {
-	        session.invalidate();
-	 }
-
-	
 }

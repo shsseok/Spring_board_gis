@@ -9,8 +9,11 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.SessionAttribute;
+
 import geomex.notice.model.UserVo;
 import geomex.notice.service.UserService;
+import geomex.notice.session.SessionConst;
 
 @Controller
 public class LoginController {
@@ -27,20 +30,32 @@ public class LoginController {
     @PostMapping("/loginAction.do")
     @ResponseBody
     public Map<String, Integer> handleLogin(@RequestBody UserVo loginData, HttpSession session) {
-    	System.out.println(loginData.getUserId());
+    	
+    	int isSuccess=0;
         Map<String, Integer> response = new HashMap<>();  
-        int result = userService.login(loginData, session);
-        response.put("result", result);
+        isSuccess = userService.login(loginData);
+        if(isSuccess == 1)
+        {//로그인이 성공했다면
+        	session.setAttribute(SessionConst.USER_ID, loginData.getUserId());
+        	response.put("result", isSuccess);
+        	return response;
+        }
+        response.put("result", isSuccess);
         return response;
     }
     
     @PostMapping("/logoutAction.do")
     @ResponseBody
-    public Map<String, Integer> handleLogout(HttpSession session) {
-        userService.logout(session);
-        Map<String, Integer> response = new HashMap<>();
-        response.put("result", -1);  // 로그아웃 성공을 나타내는 코드
+    public Map<String, Object> handleLogout(HttpSession session) {
+        Map<String, Object> response = new HashMap<>();
+                   
+        if (session != null) {
+            session.invalidate(); 
+            response.put("result", 1);  
+        } 
+
         return response;
     }
+
 
 }

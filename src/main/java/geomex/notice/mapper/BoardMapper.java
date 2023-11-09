@@ -30,4 +30,6 @@ public interface BoardMapper {
 	int selectSearchCount(@Param("text")String text,@Param("type")String type);
 	
 	void updateViewsCount(int boardId);
+	
+	String selectWriter(int boardId);
 }

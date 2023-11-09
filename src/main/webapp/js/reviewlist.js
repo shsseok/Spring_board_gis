@@ -1,6 +1,4 @@
-$(document).ready(function() {
-	   function listReviews() {
-		   console.log("dd");
+$(document).ready(function() {	  
 	        $.ajax({
 	            url: "reviewList/Select.do",
 	            method: "POST",
@@ -22,7 +20,5 @@ $(document).ready(function() {
 	            error: function(err) {
 	                console.error("리뷰 불러오기 중 오류 발생:", err);
 	            }
-	        });
-	    }	    
-	    listReviews();
+	        });	    	    	    
 });

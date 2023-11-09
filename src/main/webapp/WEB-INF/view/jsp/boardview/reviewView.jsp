@@ -2,7 +2,7 @@
     pageEncoding="UTF-8"%>
 <%@ page import="geomex.notice.model.ReviewVo"%>
  <%
-	String userid = (String) session.getAttribute("userId");	
+	String userid = (String)session.getAttribute("userId");	
 	ReviewVo review=(ReviewVo)request.getAttribute("review");
  %>
 <!DOCTYPE html>
@@ -12,67 +12,9 @@
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
 </head>
-
-<script>
-$(document).ready(function() {
-    $("#reviewUpdate").on("click", function() {
-    
-        var reviewData = {          
-        	reviewTitle: $("#reviewTitle").val(),
-            reviewContent: $("#reviewContent").val(),
-            writerId: $("#writerId").val(),
-            reviewId: $("#reviewId").val()
-        };
-
-        $.ajax({
-            url: "review/Update.do",
-            method: "POST",
-            data: JSON.stringify(reviewData),
-            contentType: "application/json",
-            success: function(response) {
-                if (response.result==1) {
-                    alert('리뷰가 성공적으로 수정되었습니다.');
-                    location.href = 'boardView.do?boardId=' + $("#boardId").val();
-                } else {
-                    alert('리뷰 수정에 실패했습니다.');
-                }
-            },
-            error: function(err) {
-                console.error("리뷰 수정 중 오류 발생:", err);
-            }
-        });
-    });
-
-    $("#reviewDelete").on("click", function() {
-    	
-        var reviewData = {
-        	writerId: $("#writerId").val(),
-            reviewId: $("#reviewId").val()
-        };
-
-        $.ajax({
-            url: "review/Delete.do",
-            method: "POST",
-            data: JSON.stringify(reviewData),
-            contentType: "application/json",
-            success: function(response) {
-                if (response.result==1) {
-                    alert('리뷰가 성공적으로 삭제되었습니다.');
-                    location.href = 'boardView.do?boardId=' + $("#boardId").val();
-                } else {
-                    alert('리뷰 삭제에 실패했습니다.');
-                }
-            },
-            error: function(err) {
-                console.error("리뷰 삭제 중 오류 발생:", err);
-            }
-        });
-    });
-});
-</script>
+<script src="js/reviewService.js"></script>
 <meta charset="UTF-8">
 <title>리뷰 상세 페이지</title>
-
 <body>
 <div class="container">
 		<h2 class="text-center">댓글 상세 목록</h2>

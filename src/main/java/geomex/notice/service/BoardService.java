@@ -16,6 +16,7 @@ import org.springframework.web.multipart.MultipartFile;
 import egovframework.rte.fdl.property.EgovPropertyService;
 import geomex.notice.mapper.BoardMapper;
 import geomex.notice.model.BoardVo;
+import geomex.notice.model.BookMarkVo;
 import geomex.notice.model.FileVo;
 
 
@@ -25,8 +26,6 @@ public class BoardService {
 	private BoardMapper boardMapper;
 	@Resource(name = "propertiesService")
 	private EgovPropertyService propertiesService;
-	@Autowired
-	private UserService userService;
 	@Resource(name = "transactionManager")
 	private DataSourceTransactionManager tranScationMn;
 	
@@ -49,29 +48,25 @@ public class BoardService {
 	
 	public int boardUpdate(BoardVo boardVo) {
 		int isSuceess = 0;		
-		if(userCheck(boardVo))
-		{
-			isSuceess = boardMapper.updateBoard(boardVo);
-			return isSuceess;
-		} 
-		else
+		isSuceess = boardMapper.updateBoard(boardVo);
+		if(isSuceess==1)
 		{
 			return isSuceess;
 		}
+		return isSuceess;
 	}
-	public int boardDelete(BoardVo boardVo) {
+	public int boardDelete(int boardId) {
 		int isSuceess = 0;
-		if(userCheck(boardVo))
-		{
-			isSuceess = boardMapper.deleteBoard(boardVo.getBoardId());
+		isSuceess = boardMapper.deleteBoard(boardId);
+		if(isSuceess==1)
+		{			
 			return isSuceess;
-		} 
-		else
-		{
-			return isSuceess;
-		}
-		
+		} 		
+		return isSuceess;		
 	}
+	public String getWriterByBoardId(int boardId) {
+        return boardMapper.selectWriter(boardId);
+    }
 	
 	public boolean insertBoardAndFiles(BoardVo boardVo, List<MultipartFile> files) {
 		TransactionStatus tsStatus = tranScationMn.getTransaction(new DefaultTransactionDefinition());
@@ -124,19 +119,6 @@ public class BoardService {
 			i.printStackTrace();
 			return false;
 		}
-	}
-
-	public boolean userCheck(BoardVo boardVo)
-	{
-		String userId=userService.getUserId(boardVo.getUserId());
-		if(userId!=null && userId.equals(boardVo.getUserId()))
-		{
-			return true;
-		} 
-		else
-		{
-			return false;
-		}		
 	}
 	// 전체 게시판 조회에 대한 페이징 처리를 위해서
 	public int getBoardCount() {
