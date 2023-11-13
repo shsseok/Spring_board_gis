@@ -19,7 +19,7 @@ $(document).ready(
 							success : function(response) {
 								if (response.result == 1) {
 									alert('리뷰가 성공적으로 수정되었습니다.');
-									location.href = 'boardView.do?boardId='
+									location.href = 'reviewList.do?boardId='
 											+ $("#boardId").val();
 								} else {
 									alert('리뷰 수정에 실패했습니다.');
@@ -48,10 +48,10 @@ $(document).ready(
 							success : function(response) {
 								if (response.result == 1) {
 									alert('리뷰가 성공적으로 삭제되었습니다.');
-									location.href = 'boardView.do?boardId='
+									location.href = 'reviewList.do?boardId='
 											+ $("#boardId").val();
 								} else {
-									alert('리뷰 삭제에 실패했습니다.');
+									alert('리뷰 삭제에 실패s했습니다.');
 								}
 							},
 							error : function(err) {

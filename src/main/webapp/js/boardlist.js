@@ -4,11 +4,7 @@ $(document).ready(function() {
 	  var savedPageNo = sessionStorage.getItem('currentPage') || 1;
 	  var savedSearchType = sessionStorage.getItem('searchType') || '';
 	  var savedSearchText = sessionStorage.getItem('searchText') || ''; 
-    
-   /*
-	 * if (savedSearchType !== null) { $('#searchType').val(savedSearchType); }
-	 * if (savedSearchText !== null) { $('#searchText').val(savedSearchText); }
-	 */                
+             
 	listBoards(savedPageNo,savedSearchType,savedSearchText);
     $("#search-btn").click(function() {    	
     	var searchType = $('#searchType').val();

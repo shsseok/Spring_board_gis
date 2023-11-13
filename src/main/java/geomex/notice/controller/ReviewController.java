@@ -48,7 +48,12 @@ public class ReviewController {
 		model.addAttribute("review", reviewVo);
 		return "reviewView";
 	}
-
+	@GetMapping("/reviewList.do")
+	public String showReviewListPage(@RequestParam int boardId,Model model) {
+		model.addAttribute("boardId",boardId);
+		return "reviewList";
+		
+	}
 	@PostMapping(value="reviewList/Select.do",produces=MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody
 	public  Map<String, ArrayList<ReviewVo>> selectReviewList(@RequestParam("boardId") int boardId) {

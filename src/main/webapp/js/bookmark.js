@@ -1,20 +1,23 @@
 $(document).ready(function() {
-    var isBookmarked = false; 
+    var boardId = $('#boardId').val(); 
+    var bookmarkBtn = $('#bookmarkToggle');
+    var isBookmarked = false;
 
-    
-    updateBookmarkButton();
+    // 북마크 상태 확인
+    checkBookmarkStatus();
 
-    $('#bookmarkToggle').click(function() {
-        var boardId = $('#boardId').val(); 
-        var url = isBookmarked ? '/board/' + boardId + '/RemoveBookmark' : '/board/' + boardId + '/AddBookmark';
+    // 북마크 버튼 클릭 이벤트
+    bookmarkBtn.click(function() {
+    	var method = isBookmarked ? 'DELETE' : 'POST';
+        var url = 'bookmarks/' + boardId+'.do';
 
         $.ajax({
-            type: 'POST',
+            type: method,
             url: url,
             success: function(response) {
                 isBookmarked = !isBookmarked;
                 updateBookmarkButton();
-                alert(isBookmarked ? '북마크 되었습니다.' : '북마크가 해제되었습니다.');
+                alert(response);
             },
             error: function() {
                 alert('북마크 처리 중 문제가 발생했습니다.');
@@ -22,15 +25,30 @@ $(document).ready(function() {
         });
     });
 
+    // 북마크 상태 확인
+    function checkBookmarkStatus() {
+        $.ajax({
+            type: 'GET',
+            url: 'bookmarks/' + boardId + '/findBySingle.do',
+            success: function(response) {
+                isBookmarked = response;
+                updateBookmarkButton();
+            },
+            error: function() {
+                alert('북마크 상태 확인 중 문제가 발생했습니다.');
+            }
+        });
+        
+    }
+
+    // 버튼 상태 업데이트
     function updateBookmarkButton() {
-        var $bookmarkBtn = $('#bookmarkToggle');
         if (isBookmarked) {
-            $bookmarkBtn.text('즐켜찾기 해제');
-            $bookmarkBtn.removeClass('btn-warning').addClass('btn-success');
+            bookmarkBtn.text('즐겨찾기 해제');
+            bookmarkBtn.removeClass('btn-warning').addClass('btn-success');
         } else {
-            $bookmarkBtn.text('하기');
-            $bookmarkBtn.removeClass('btn-success').addClass('btn-warning');
+            bookmarkBtn.text('즐겨찾기 추가');
+            bookmarkBtn.removeClass('btn-success').addClass('btn-warning');
         }
     }
 });
-

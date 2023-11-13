@@ -4,15 +4,25 @@
   <!-- 북마크 추가 -->
     <insert id="insertBookmark" parameterType="geomex.notice.model.BookMarkVo">
         INSERT 
-        INTO notice.bookmarks (user_id, board_id)
+        INTO notice.bookmarks (user_id, bookmark_board_id)
        	VALUES (#{userId}, #{boardId})
     </insert>
     
     <!-- 북마크 삭제 -->
-    <delete id="deleteBookmark" parameterType="int">
+    <delete id="deleteBookmark" parameterType="geomex.notice.model.BookMarkVo">
         DELETE 
-        FROM bookmarks
-        WHERE bookmark_id = #{bookmarkId}
+        FROM notice.bookmarks
+        WHERE user_id=#{userId} 
+        AND bookmark_board_id=#{boardId}
     </delete>
+    
+    <!--즐겨찾기 조회 -->
+ <select id="selectBookmark" parameterType="geomex.notice.model.BookMarkVo" resultType="boolean">
+    SELECT CASE WHEN COUNT(*) > 0 THEN TRUE ELSE FALSE END
+    FROM notice.bookmarks
+    WHERE user_id = #{userId} 
+    AND bookmark_board_id = #{boardId}
+</select>
+
 
 </mapper>
