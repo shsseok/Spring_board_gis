@@ -1,8 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ page import="geomex.notice.model.BoardVo"%>
 <%
 	String userid = (String) session.getAttribute("userId");
 	String message=(String)request.getAttribute("msg");	
+	BoardVo boardVo= (BoardVo) request.getAttribute("boardVo");
 %>
 <!DOCTYPE html>
 <html>
@@ -28,15 +30,16 @@ window.onload = function() {
 			<form class="row g-5" id="fileForm" action="insertBoardAction.do" method="post" enctype="multipart/form-data"> 
 			 	<div class="mb-2">
 					<label for="userId" class="form-label">작성자ID</label> 
-					<input type="text" class="form-control" name="userId" id="userId" value=<%=userid%> readonly>
+					<input type="text" class="form-control" name="userId" id="userId" value="<%=userid%>" readonly>
 				</div>
 				<div class="mb-2">
 					<label for="boardTitle" class="form-label">제목</label> 
-					<input type="text" name="boardTitle" id="boardTitle" class="form-control" placeholder="제목을 입력하세요"> 
+					<input type="text" name="boardTitle" id="boardTitle" class="form-control" placeholder="제목을 입력하세요" value="<%= boardVo!=null ? boardVo.getBoardTitle() : "" %>">
+ 
 				</div>
 				<div class="mb-2">
 					<label for="boardContent" class="form-label">내용</label> 
-					<textarea rows="8" cols="85" name="boardContent" id="boardContent" class="form-control" placeholder="내용을 입력하세요"></textarea>
+					<textarea rows="8" cols="85" name="boardContent" id="boardContent" class="form-control" placeholder="내용을 입력하세요"><%= boardVo!=null ? boardVo.getBoardContent() : "" %></textarea>
 				</div>
 				<div class="mb-2">
 					 <label for="boardFiles" class="form-label">파일</label>

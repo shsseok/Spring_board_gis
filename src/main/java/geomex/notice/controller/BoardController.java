@@ -2,10 +2,12 @@ package geomex.notice.controller;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import javax.annotation.Resource;
 import javax.jms.Session;
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
@@ -85,10 +87,9 @@ public class BoardController {
 	public String insertBoardAction(@Valid @ModelAttribute BoardVo boardVo, BindingResult result,
 			@RequestParam("boardFiles") List<MultipartFile> files, RedirectAttributes redirectAttributes)
 			throws Exception {
-		System.out.println("여기까지는 진행됨 큰 파일 업로드 하는 순간 롤백되어야함");
 		if (result.hasErrors()) {
-
 			redirectAttributes.addFlashAttribute("msg", result.getFieldError().getDefaultMessage());
+			redirectAttributes.addFlashAttribute("boardVo", boardVo);
 			return "redirect:/boardWrite.do";
 		} else {
 			boolean success = boardService.insertBoardAndFiles(boardVo, files);
@@ -96,7 +97,7 @@ public class BoardController {
 				redirectAttributes.addFlashAttribute("msg", "글을 작성하였습니다.");
 				return "redirect:/board.do";
 			} else {
-				System.out.println("실패" + success);
+				redirectAttributes.addFlashAttribute("boardVo", boardVo);
 				redirectAttributes.addFlashAttribute("msg", "글쓰기에 실패하였습니다.");
 				return "redirect:/boardWrite.do";
 			}
@@ -105,10 +106,20 @@ public class BoardController {
 	}
 
 	@GetMapping("/boardView.do")
-	public String getBoardById(Model model, @RequestParam(defaultValue = "no") String viewSet,
-			@RequestParam int boardId) {
-		if (viewSet.equals("yes")) {
+	public String getBoardById(Model model, 
+	@RequestParam(defaultValue = "no") String viewSet,
+	@RequestParam int boardId,
+	HttpSession session) {
+		
+		HashSet<Integer> viewedBoards = (HashSet<Integer>) session.getAttribute("viewedBoard");
+		if(viewedBoards==null)
+		{
+			viewedBoards=new HashSet<>();
+			session.setAttribute("viewedBoard",viewedBoards);
+		}
+		if (viewSet.equals("yes") && !viewedBoards.contains(boardId)) {
 			boardService.viewsCount(boardId);
+			viewedBoards.add(boardId);
 		}
 		BoardVo board = boardService.getBoardById(boardId);
 		ArrayList<FileVo> files = fileService.getFileById(boardId);
