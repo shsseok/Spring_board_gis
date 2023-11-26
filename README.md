@@ -20,7 +20,7 @@
 
 ## 🛠 사용 기술
 
-- **백엔드**: Spring
+- **백엔드**: Spring,**DB접근 기술** MyBatis
 - **프론트엔드**: HTML, CSS, JavaScript,Jquery
 - **데이터베이스**: postgresql
 - **GIS 처리**: openlayers
