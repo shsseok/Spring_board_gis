@@ -63,11 +63,9 @@ Spring_board
 ![image](https://github.com/shsseok/Spring_board_gis/assets/117160491/80d8aa68-a259-4acb-8d75-0103e7e62705)
 ## 지도 페이지
 ![image](https://github.com/shsseok/Spring_board_gis/assets/117160491/41ca89df-bb0b-4a5b-aed6-c9fb133d653b)
-
-
-
-
-
+---
+DEMO
+TODO 링크
 ---
 
 
