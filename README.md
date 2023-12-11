@@ -39,9 +39,9 @@ Spring_board
 
 ##🌟 화면 구성 페이지
 ---
-로그인 페이지
+## 로그인 페이지
 ![image](https://github.com/shsseok/Spring_board_gis/assets/117160491/fbdddda9-021a-4dd4-9409-fa7eb3a1f86c)
-회원가입 페이지
+## 회원가입 페이지
 ![image](https://github.com/shsseok/Spring_board_gis/assets/117160491/3c8098d2-1f90-4324-9699-d2f9ee09cf6f)
 
 ## 게시판 페이지
