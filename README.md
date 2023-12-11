@@ -37,26 +37,26 @@ Spring_board
 - 전자정부프레임 워크 스프링 설정에 대한 이해
 - GIS에 대한 이해
 
-##화면 구성 페이지
+##🌟 화면 구성 페이지
 ---
 로그인 페이지
 ![image](https://github.com/shsseok/Spring_board_gis/assets/117160491/fbdddda9-021a-4dd4-9409-fa7eb3a1f86c)
 회원가입 페이지
 ![image](https://github.com/shsseok/Spring_board_gis/assets/117160491/3c8098d2-1f90-4324-9699-d2f9ee09cf6f)
 
-게시판 페이지
+## 게시판 페이지
 ![image](https://github.com/shsseok/Spring_board_gis/assets/117160491/6d55cc12-acc3-4679-a93a-9b07e1a92cb9)
-게시판 상세 페이지
+## 게시판 상세 페이지
 ![image](https://github.com/shsseok/Spring_board_gis/assets/117160491/a6355397-63a7-4a4f-b72e-564c270f25aa)
-글쓰기 페이지
+## 글쓰기 페이지
 ![image](https://github.com/shsseok/Spring_board_gis/assets/117160491/77cb08bf-f3e8-46b3-b045-8318ddfd24a5)
-리뷰 작성 페이지
+## 리뷰 작성 페이지
 ![image](https://github.com/shsseok/Spring_board_gis/assets/117160491/e36bffab-9cd1-419f-a5c6-174eefb944c3)
-리뷰 목록 페이지
+## 리뷰 목록 페이지
 ![image](https://github.com/shsseok/Spring_board_gis/assets/117160491/95a386f0-40c1-4da1-939e-2e2323f80d6d)
-리뷰 상세 페이지
+## 리뷰 상세 페이지
 ![image](https://github.com/shsseok/Spring_board_gis/assets/117160491/80d8aa68-a259-4acb-8d75-0103e7e62705)
-지도 페이지
+## 지도 페이지
 ![image](https://github.com/shsseok/Spring_board_gis/assets/117160491/41ca89df-bb0b-4a5b-aed6-c9fb133d653b)
 
 
