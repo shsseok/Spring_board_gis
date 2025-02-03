@@ -24,23 +24,16 @@ Spring_board
 -  즐겨찾기 기능, 조회수 기능, 페이징 기능, 즐겨찾기 기능
 - **GIS 통합**: 춘천시 읍면동 별 cctv정보 관측가능
 
-
 ---
 
 ## 🛠 사용 기술
 
-- **백엔드**: Spring,**DB접근 기술** MyBatis
+- **백엔드**: Spring
+- **DB접근 기술** MyBatis
 - **화면 구성**: HTML, CSS, JavaScript,Jquery
 - **데이터베이스**: postgresql
 - **GIS 처리**: openlayers
 
----
-
-## 📚 학습 목표
-
-- 스프링 프레임워크에 대한 이해
-- 전자정부프레임 워크 스프링 설정에 대한 이해
-- GIS에 대한 이해
 
 ##🌟 화면 구성 페이지
 ---
